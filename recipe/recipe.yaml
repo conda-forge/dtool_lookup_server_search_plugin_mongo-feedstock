@@ -1,0 +1,46 @@
+schema_version: 1
+
+context:
+  name: dtool_lookup_server_search_plugin_mongo
+  version: "0.2.0"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/dtool-lookup-server-search-plugin-mongo/dtool-lookup-server-search-plugin-mongo-${{ version }}.tar.gz
+  sha256: 5ede94193e764e4151905967480670966a1cd4019a3ffa09d9b82b4d1f587531
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - pymongo
+    - dtoolcore >=3.18.0
+    - dtool_lookup_server
+
+tests:
+  - python:
+      imports:
+        - dtool_lookup_server_search_plugin_mongo
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  summary: Search plugin for dtool-lookup-server using mongodb
+  license: MIT
+  license_file: LICENSE.rst
+  homepage: https://github.com/jic-dtool/dtool-lookup-server-search-plugin-mongo
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
